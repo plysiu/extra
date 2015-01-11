@@ -2,11 +2,18 @@
 
 angular.module('devMashApp')
   .controller('MainCtrl', function ($scope, $http) {
+
+    $scope.query = '';
+
+    $scope.groups = [];
+
     $scope.awesomeThings = [];
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
+    $http.get('http://devplan.uek.krakow.pl/api/groups').success(function(respond) {
+      $scope.groups = respond;
     });
+
+
 
     $scope.addThing = function() {
       if($scope.newThing === '') {
