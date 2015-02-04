@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+
+      <div  class="form-group has-success">
+        <p class="lead text-center">
+          Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską, nie przejmuj się wielkością znaków wystarczy że będzie poprawna nazwa.
+        </p>
+        <input ng-model="query.name" ng-keyup="validateGroupName()" class="form-control input-lg text-center"
+               type="text" placeholder="Twoja grupa dziekańska">
+      </div>
+
+
+      <div ng-if="timetable">
+        <button ng-click="compareTutors()" type="button" class="btn btn-success btn-block">
+          Oceniaj >
+        </button>
+        <button ng-click="showHighscore()" type="button" class="btn btn-primary btn-block">
+          Nie chcę oceniać, pokaż mi tylko zbiorczy ranking >
+        </button>
+      </div>
+      <hr/>
+
+      <p class="text-justify">
+        Aby móc wybrać pary nauczycieli, z którymi faktycznie miałeś zajęcia, system musi znać Twoją grupę dziekańską. W
+        gruncie rzeczy to jedyna informacja o Tobie, jakiej potrzebujemy - i nawet jej nie zapisujemy. Oceny są
+        całkowicie anonimowe, nie uzywamy ciasteczek ani innych metod śledzenia, nie pytamy też o żadne dane osobowe.
+      </p>
+
+      <p class="text-justify">
+        Nie namyślaj się zbyt długo nad odpowiedziami. Jeśli nie umiesz się zdecydować lub z jakichś powodów nie znasz
+        kogoś z wyświetlonej pary, wybierz opcję "nie wiem". Jeśli się pomylisz, nie przejmuj się: nie zrujnuje to
+        sumarycznego wyniku, a Ty możesz zawsze powtórzyć ten quiz.
+      </p>
+
+      <p class="text-justify">
+        Gdy zakończysz ocenianie, zobaczysz efekt - ranking wykładowców stworzony na podstawie Twoich odpowiedzi, a
+        także aktualny ranking na podstawie wszystkich do tej pory zebranych ocen.
+      </p>
+
+    </div>
+  </div>
+</div>

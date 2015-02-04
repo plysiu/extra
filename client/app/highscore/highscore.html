@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <p class="text-justify">
+        Dziękujemy za oceny! Mamy nadzieję, że odpowiadałeś zgodnie z własnymi odczuciami, a cały quiz dostarczył
+        odrobinę rozrywki.</p>
+      <p class="text-justify">A oto rankingi wykładowców skonstruowane na podstawie Twoich odpowiedzi, które przed chwilą wybrałeś, oraz
+        odpowiedzi wszystkich osób, które oceniały tych samych nauczycieli.
+      </p>
+
+      <div class="row">
+        <div ng-if="localHighscore.length > 0" class="col-lg-4">
+          <h3>
+            Twój ranking:
+          </h3>
+          <ol>
+            <li ng-repeat="item in localHighscore">
+              {{item.name}}
+              <span class="text-right">({{item.points}})</span>
+
+            </li>
+
+          </ol>
+        </div>
+
+        <div class="col-lg-4">
+          <h3>
+            Zbiorczy ranking:
+          </h3>
+          <ol>
+            <li ng-repeat="item in globalHighscore">
+              {{item.name}}
+              <span class="text-right">({{item.points}})</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="col-lg-4">
+          <h3>
+            Random ranking:
+          </h3>
+          <ol>
+            <li ng-repeat="item in randomHighscore">
+              {{item.name}}
+              <span class="text-right">({{item.points}})</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <p class="text-justify">
+        Twój ranking może nie być całkowicie zgodny z Twoimi oczekiwaniami, na przykład jeśli wybierałeś sprzeczne
+        odpowiedzi, zbyt cześto wybierałeś "nie wiem", lub przerwałeś quiz przedwcześniej. Jeśli masz ochotę, możesz zawsze powtórzyć quiz.
+      </p>
+      <div class="col-lg-6 col-lg-offset-3">
+        <a class="btn btn-group-justified btn-lg btn-success" ng-href="/">Strona Główna ></a>
+      </div>
+    </div>
+  </div>
+</div>
