@@ -4,7 +4,7 @@ angular.module('devMashApp')
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'app/homepage/homepage.html',
+        controller: 'HomepageCtrl'
       });
   });

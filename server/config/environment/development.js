@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/devmash-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };
