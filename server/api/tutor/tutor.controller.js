@@ -137,7 +137,6 @@ exports.randomHighscore = function (req, res) {
       for (var x in tutors) {
         a.push(tutors[x]);
       }
-      console.log(si,no);
       return res.json({
         fights: tutorsFights.length,
         tutors: a.sort(function (a, b) {

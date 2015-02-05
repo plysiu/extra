@@ -90,7 +90,6 @@ exports.create = function (req, res) {
                 if (err) {
                   console.log('TutorPairs', err);
                 }
-                console.log('XD', tutorPairs);
               });
             });
             return res.json(201, timetable);

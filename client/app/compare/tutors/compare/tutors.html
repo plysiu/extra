@@ -3,7 +3,6 @@
     <div class="col-lg-8 col-lg-offset-2">
 
 
-
       <h3 class="text-center">Którego z wykładowców lepiej oceniasz?</h3>
 
 
@@ -17,47 +16,53 @@
         </div>
       </div>
 
-      <div class="form-group col-lg-12 fx-fade-down" ng-if="!locked">
+      <div class="row">
+
+        <div class="form-group col-lg-12 fx-fade-down" ng-if="!locked">
           <button type="button" ng-click="castTheVote(0)"
-                  class="btn btn-lg col-lg-5 col-md-5 col-sm-5   btn-{{getStyle()}}">
+                  class="btn btn-lg col-lg-5 col-md-5 col-sm-12  col-sx-12 {{getStyle()}}">
             <span ng-bind="fight.alpha.name"></span>
           </button>
           <button type="button" ng-click="castTheVote(1)"
-                  class="btn btn-default  col-lg-2 col-md-2  col-sm-2   btn-lg ">nie
+                  class="btn btn-default  col-lg-2 col-md-2  col-sm-12 col-sx-12  btn-lg ">nie
             wiem
           </button>
           <button type="button" ng-click="castTheVote(2)"
-                  ng-class=""
-                  class="btn  btn-lg col-lg-5  col-md-5  col-sm-5 btn-{{getStyle()}}">
+                  class="btn  btn-lg col-lg-5  col-md-5  col-sm-12  col-sx-12 {{getStyle()}}">
             <span ng-bind="fight.beta.name"></span>
           </button>
 
+        </div>
 
       </div>
 
 
-
-      <div class="form-group col-lg-10 col-lg-offset-1
+      <div class="row">
+        <div class="form-group col-lg-10 col-lg-offset-1
       col-md-10 col-md-offset-1
       col-sm-10 col-sm-offset-1
-      col-xs-10 col-xs-offset-1 fx-fade-down
+      col-xs-12 fx-fade-up
       " ng-repeat="item in votedTutorsPairs">
 
-        <button type="button" disabled="disabled"
-                ng-class="{'btn-success': result(0,item.result), 'btn-default': !result(0,item.result)}"
-                class="btn btn-sm col-lg-5 col-md-5 col-sm-5  col-xs-5">
-          <span ng-bind="item.fight.alpha.name"></span>
-        </button>
-        <button type="button" disabled="disabled"
-                ng-class="{'btn-success': result(1,item.result),'btn-default': !result(1,item.result)}"
-                class="  btn col-lg-2 col-md-2  col-sm-2 col-xs-2 btn-sm">nie
-          wiem
-        </button>
-        <button type="button" disabled="disabled"
-                ng-class="{'btn-success':result(2,item.result),'btn-default': !result(2,item.result)}"
-                class="btn btn-sm col-lg-5  col-md-5  col-sm-5 col-xs-5 ">
-          <span ng-bind="item.fight.beta.name"></span>
-        </button>
+          <button type="button" disabled="disabled"
+
+                  class="btn btn-sm col-lg-5 col-md-5 col-sm-5  col-xs-12 {{result(0,item.result)? item.style : 'btn-default'}}">
+            <span ng-bind="item.fight.alpha.name"></span>
+          </button>
+          <button type="button" disabled="disabled"
+
+                  class="  btn col-lg-2 col-md-2  col-sm-2 col-xs-12 btn-sm {{result(1,item.result)? item.style : 'btn-default'}}">
+            nie
+            wiem
+          </button>
+          <button type="button" disabled="disabled"
+
+                  class="btn btn-sm col-lg-5  col-md-5  col-sm-5 col-xs-12 {{result(2,item.result)? item.style : 'btn-default'}}">
+            <span ng-bind="item.fight.beta.name"></span>
+          </button>
+
+        </div>
+
 
       </div>
 

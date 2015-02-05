@@ -63,20 +63,20 @@ angular.module('devMashApp')
       switch ($scope.progress % 5) {
         case 0:
           console.log(0);
-          return 'success';
+          return 'btn-success';
         case 1:
           console.log(1);
 
-          return 'primary';
+          return 'btn-primary';
         case 2:
           console.log(2);
 
-          return 'danger';
+          return 'btn-danger';
         case 3:
           console.log(3);
-          return 'warning';
+          return 'btn-warning';
         case 4:
-          return 'info';
+          return 'btn-info';
       }
     };
     /**
@@ -118,13 +118,14 @@ angular.module('devMashApp')
         $http.post('api/tutorsFights/', data)
           .success(function () {
             console.log('Głos wysłany. Zostało par: ' + $scope.tutorsPairs.length);
-            $scope.progress++;
 
             $scope.votedTutorsPairs.unshift({
+              style:  $scope.getStyle(),
               result: result,
               fight: $scope.fight
             });
 
+            $scope.progress++;
 
             $scope.setNextPair();
           }).error(function () {

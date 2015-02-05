@@ -25,7 +25,6 @@ exports.show = function (req, res) {
       });
 
 
-      console.log(tutorPair);
 
 
       return res.json({
