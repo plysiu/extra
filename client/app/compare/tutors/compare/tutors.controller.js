@@ -95,7 +95,6 @@ angular.module('devMashApp')
      *
      * @param result
      */
-    $scope.reversed = [];
     $scope.castTheVote = function (result) {
       if ($scope.checkDelayBetweenVotes() &&
         ( result !== 0 ||
@@ -121,14 +120,10 @@ angular.module('devMashApp')
             console.log('Głos wysłany. Zostało par: ' + $scope.tutorsPairs.length);
             $scope.progress++;
 
-            $scope.votedTutorsPairs.push({
+            $scope.votedTutorsPairs.unshift({
               result: result,
-              fight: angular.copy($scope.fight)
+              fight: $scope.fight
             });
-
-            angular.copy($scope.votedTutorsPairs, $scope.reversed);
-            $scope.reversed.reverse();
-
 
 
             $scope.setNextPair();
@@ -137,12 +132,7 @@ angular.module('devMashApp')
           });
       }
     };
-    $scope.getVotedTutorsPairs = function () {
-      var t = [];
-      angular.copy($scope.votedTutorsPairs, t);
-      t.reverse();
-      return t;
-    }
+
     /**
      *
      */
@@ -157,10 +147,6 @@ angular.module('devMashApp')
       return Math.floor(($scope.progress / $scope.max ) * 100) + '%';
     };
 
-
-    $scope.animateFight = function(){
-
-    }
 
 
   }]);
