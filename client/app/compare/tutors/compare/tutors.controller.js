@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('devMashApp')
-  .controller('CompareTutorsCtrl', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams, $location) {
+  .controller('CompareTutorsCtrl', ['$scope', '$http', '$routeParams', '$location', '$timeout',function ($scope, $http, $routeParams, $location, $timeout) {
     /**
      *
      * @type {Array}
@@ -54,6 +54,8 @@ angular.module('devMashApp')
         $scope.locked = false;
         $scope.fight = $scope.tutorsPairs.shift();
       }
+      $scope.progress++;
+
     };
     /**
      *
@@ -62,18 +64,12 @@ angular.module('devMashApp')
     $scope.getStyle = function () {
       switch ($scope.progress % 5) {
         case 0:
-          console.log(0);
           return 'btn-success';
         case 1:
-          console.log(1);
-
           return 'btn-primary';
         case 2:
-          console.log(2);
-
           return 'btn-danger';
         case 3:
-          console.log(3);
           return 'btn-warning';
         case 4:
           return 'btn-info';
@@ -96,7 +92,9 @@ angular.module('devMashApp')
      * @param result
      */
     $scope.castTheVote = function (result) {
-      if ($scope.checkDelayBetweenVotes() &&
+
+
+      if ($scope.elapsedSinceLastVote() > 800 &&
         ( result !== 0 ||
         result !== 1 ||
         result !== 2
@@ -106,34 +104,55 @@ angular.module('devMashApp')
         $scope.lastVote = new Date().getTime();
 
 
-        var data = {
+        $http.post('api/tutorsFights/', {
           timetableId: $scope.fight.timetableId._id,
           tutorPairId: $scope.fight._id,
           alpha: $scope.fight.alpha._id,
           beta: $scope.fight.beta._id,
           result: result,
           sessionId: $scope.sessionId
-        };
-
-        $http.post('api/tutorsFights/', data)
+        })
           .success(function () {
             console.log('Głos wysłany. Zostało par: ' + $scope.tutorsPairs.length);
-
             $scope.votedTutorsPairs.unshift({
-              style:  $scope.getStyle(),
+              style: $scope.getStyle(),
               result: result,
               fight: $scope.fight
             });
 
-            $scope.progress++;
 
-            $scope.setNextPair();
+
+
+
+
+
+
+
+            $timeout(function(){
+              $scope.setNextPair();
+
+            },500 - $scope.elapsedSinceLastVote());
+//            do {
+//
+//              if ($scope.elapsedSinceLastVote() > 1000) {
+//                console.log("c");
+//
+//              }
+//console.log(1);
+//
+//            } while ( $scope.elapsedSinceLastVote() > 1000);
+
+
           }).error(function () {
             alert('Wystąpił błąd podczas wysyłania głosu. Odśwież strone i spróbuj ponownie.');
           });
       }
     };
 
+
+    $scope.elapsedSinceLastVote = function () {
+      return new Date().getTime() - $scope.lastVote;
+    };
     /**
      *
      */
@@ -147,7 +166,6 @@ angular.module('devMashApp')
     $scope.getPercentages = function () {
       return Math.floor(($scope.progress / $scope.max ) * 100) + '%';
     };
-
 
 
   }]);

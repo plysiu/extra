@@ -17,21 +17,32 @@
 
       <div class="row">
 
-        <div class="form-group col-lg-12 fx-fade-down" ng-if="!locked">
-          <button type="button" ng-click="castTheVote(0)"
-                  class="btn btn-lg col-lg-5 col-md-5 col-sm-12  col-sx-12 {{getStyle()}}">
-            <span ng-bind="fight.alpha.name"></span>
-          </button>
-          <button type="button" ng-click="castTheVote(1)"
-                  class="btn btn-lg btn-default  col-lg-2 col-md-2  col-sm-12 col-sx-12   ">nie
-            wiem
-          </button>
-          <button type="button" ng-click="castTheVote(2)"
-                  class="btn  btn-lg col-lg-5  col-md-5  col-sm-12  col-sx-12 {{getStyle()}}">
-            <span ng-bind="fight.beta.name"></span>
-          </button>
+        <div class="form-group col-lg-12">
+          <div class="fx-fade-normal fx-easing-cubic fx-speed-500" ng-show="!locked">
+
+            <button type="button" ng-click="castTheVote(0)"
+                    ng-disabled="locked"
+
+                    class="btn btn-lg col-lg-5 col-md-5 col-sm-12  col-sx-12 {{getStyle()}}">
+              <span ng-bind="fight.alpha.name"></span>
+            </button>
+            <button type="button" ng-click="castTheVote(1)"
+                    ng-disabled="locked"
+
+                    class="btn btn-lg btn-default  col-lg-2 col-md-2  col-sm-12 col-sx-12   ">nie
+              wiem
+            </button>
+            <button type="button" ng-click="castTheVote(2)"
+                    ng-disabled="locked"
+
+                    class="btn  btn-lg col-lg-5  col-md-5  col-sm-12  col-sx-12 {{getStyle()}}">
+              <span ng-bind="fight.beta.name"></span>
+            </button>
+          </div>
+
 
         </div>
+
 
       </div>
 
@@ -40,8 +51,7 @@
         <div class="form-group col-lg-10 col-lg-offset-1
       col-md-10 col-md-offset-1
       col-sm-10 col-sm-offset-1
-      col-xs-12 fx-fade-up
-      " ng-repeat="item in votedTutorsPairs">
+      col-xs-12 fx-fade-down fx-easing-bounce fx-speed-500" ng-repeat="item in votedTutorsPairs">
 
           <button type="button" disabled="disabled"
 
