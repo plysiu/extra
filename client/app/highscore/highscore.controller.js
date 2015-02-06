@@ -7,7 +7,6 @@ angular.module('devMashApp')
 
     $scope.localHighscore = [];
 
-    $scope.randomHighscore = [];
 
     $http.get('api/tutors/highscore/' + $routeParams.timetableId)
       .success(function (global) {
@@ -16,12 +15,12 @@ angular.module('devMashApp')
       });
 
 
-    $http.get('api/tutors/random/' + $routeParams.timetableId)
-      .success(function (random) {
-        console.log('random', random);
-        $scope.fights = random.fights;
-        $scope.randomHighscore = random.tutors;
-      });
+    //$http.get('api/tutors/random/' + $routeParams.timetableId)
+    //  .success(function (random) {
+    //    console.log('random', random);
+    //    $scope.fights = random.fights;
+    //    $scope.randomHighscore = random.tutors;
+    //  });
 
     if (typeof $routeParams.sessionId !== 'undefined') {
 
