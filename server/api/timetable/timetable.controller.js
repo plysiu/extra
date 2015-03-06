@@ -43,6 +43,29 @@ exports.create = function (req, res) {
             /**
              */
             var tutors = {};
+            var validTutors = ['Jacek Wołoszyn',
+              'Ryszard Tadeusiewicz',
+              'Jan Madej',
+              'Janusz Morajda',
+              'Grażyna Paliwoda-Pękosz',
+              'Piotr Soja',
+              'Janusz Stal',
+              'Jan Trąbka',
+              'Wit Urban',
+              'Artur Żuwała',
+              'Paweł Lula',
+              'Dariusz Dymek',
+              'Mariusz Grabowski',
+              'Dariusz Put',
+              'Tadeusz Wilusz',
+              'Paweł Wołoszyn',
+              'Agnieszka Zając',
+              'Przemysław Jaśko',
+              'Janusz Tuchowski',
+              'Katarzyna Wójcik'
+            ];
+
+
             for (var i = 0; i < body.activities.length; i++) {
 
 
@@ -50,6 +73,7 @@ exports.create = function (req, res) {
 
                 if (body.activities[i].tutors[j].name.indexOf('dr ') !== -1
                   || body.activities[i].tutors[j].name.indexOf('mgr ') !== -1
+                  || body.activities[i].tutors[j].name.indexOf('inż. ') !== -1
                   || body.activities[i].tutors[j].name.indexOf('prof. ') !== -1)
                   tutors[body.activities[i].tutors[j].name] = {
                     id: body.activities[i].tutors[j].id,
@@ -59,9 +83,14 @@ exports.create = function (req, res) {
 
               }
             }
+
             var tuts = [];
             for (var t in tutors) {
-              tuts.push(tutors[t]);
+              for (var r in validTutors) {
+                if (tutors[t].name.indexOf(validTutors[r]) !== -1) {
+                  tuts.push(tutors[t]);
+                }
+              }
             }
             /**
              * Uzupełnianie bazy prowadzącymi

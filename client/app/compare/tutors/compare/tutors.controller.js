@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('devMashApp')
-  .controller('CompareTutorsCtrl', ['$scope', '$http', '$routeParams', '$location', '$timeout',function ($scope, $http, $routeParams, $location, $timeout) {
+  .controller('CompareTutorsCtrl', ['$scope', '$http', '$routeParams', '$location', '$timeout', '$log', function ($scope, $http, $routeParams, $location, $timeout, $log) {
     /**
      *
      * @type {Array}
@@ -39,6 +39,7 @@ angular.module('devMashApp')
         $scope.max = data.tutorsPairs.length;
 
         $scope.sessionId = data.sessionId;
+
         $scope.fight = $scope.tutorsPairs.shift();
         $scope.locked = false;
       }).error(function () {
@@ -75,30 +76,16 @@ angular.module('devMashApp')
           return 'btn-info';
       }
     };
-    /**
-     *
-     * @param id
-     */
+
     $scope.lastVote = 0;
-    /**
-     *
-     * @returns {boolean}
-     */
+
     $scope.checkDelayBetweenVotes = function () {
       return $scope.lastVote + 300 <= new Date().getTime();
     }
-    /**
-     *
-     * @param result
-     */
+
     $scope.castTheVote = function (result) {
-
-
       if ($scope.elapsedSinceLastVote() > 800 &&
-        ( result !== 0 ||
-        result !== 1 ||
-        result !== 2
-        )) {
+        ( result !== 0 || result !== 1 || result !== 2 )) {
 
         $scope.locked = true;
         $scope.lastVote = new Date().getTime();
@@ -110,9 +97,10 @@ angular.module('devMashApp')
           alpha: $scope.fight.alpha._id,
           beta: $scope.fight.beta._id,
           result: result,
-          sessionId: $scope.sessionId
+          sessionId: $scope.sessionId,
+          grade: $routeParams.grade
         })
-          .success(function () {
+          .success(function (data) {
             console.log('Głos wysłany. Zostało par: ' + $scope.tutorsPairs.length);
             $scope.votedTutorsPairs.unshift({
               style: $scope.getStyle(),
@@ -120,28 +108,9 @@ angular.module('devMashApp')
               fight: $scope.fight
             });
 
-
-
-
-
-
-
-
-
-            $timeout(function(){
+            $timeout(function () {
               $scope.setNextPair();
-
-            },500 - $scope.elapsedSinceLastVote());
-//            do {
-//
-//              if ($scope.elapsedSinceLastVote() > 1000) {
-//                console.log("c");
-//
-//              }
-//console.log(1);
-//
-//            } while ( $scope.elapsedSinceLastVote() > 1000);
-
+            }, 500 - $scope.elapsedSinceLastVote());
 
           }).error(function () {
             alert('Wystąpił błąd podczas wysyłania głosu. Odśwież strone i spróbuj ponownie.');
@@ -149,23 +118,19 @@ angular.module('devMashApp')
       }
     };
 
-
     $scope.elapsedSinceLastVote = function () {
       return new Date().getTime() - $scope.lastVote;
     };
-    /**
-     *
-     */
+
     $scope.goToHighscore = function () {
       $location.path('highscore/' + $routeParams.timetableId + '/' + $scope.sessionId);
-    }
+    };
 
     $scope.result = function (x, y) {
-      return x === y;
-    }
+      return x == y;
+    };
+
     $scope.getPercentages = function () {
       return Math.floor(($scope.progress / $scope.max ) * 100) + '%';
     };
-
-
   }]);

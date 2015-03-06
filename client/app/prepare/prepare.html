@@ -2,16 +2,45 @@
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2">
 
-      <div  class="form-group has-success">
+      <div class="form-group has-success">
         <p class="lead text-center">
-          Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską, nie przejmuj się wielkością znaków wystarczy że będzie poprawna nazwa.
+          Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską, nie przejmuj się wielkością znaków wystarczy że
+          będzie poprawna nazwa.
         </p>
-        <input ng-model="query.name" ng-keyup="validateGroupName()" class="form-control input-lg text-center"
+        <input ng-if="groups" autofocus="" ng-model="query.name" ng-keyup="validateGroupName()"
+               class="form-control input-lg text-center"
                type="text" placeholder="Twoja grupa dziekańska">
       </div>
+      <div ng-if="timetable && !disabled" class="form-group has-success text-center">
 
+        <p class="lead text-center">
+          Z jakiego przedziału miałeś/aś średnią ocen z poprzedniego semestru?
+        </p>
 
-      <div ng-if="timetable" class="fx-fade-down">
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="0">nie wiem
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="1">( 2; 3 ]
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="2">( 3; 3.5 ]
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="3">( 3.5; 4 ]
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="4">( 4; 4.5 ]
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="5">( 4.5; 5 ]
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="grade" ng-model='grade.value' value="6">( 5; 6 ]
+        </label>
+      </div>
+
+      <div ng-if="timetable && !disabled && grade.value" class="fx-fade-down">
         <button ng-click="compareTutors()" type="button" class="btn btn-success btn-block">
           Oceniaj >
         </button>
