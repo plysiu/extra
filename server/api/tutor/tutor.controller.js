@@ -9,8 +9,13 @@ var elo = new ELO();
 
 //
 exports.globalHighscore = function (req, res) {
-  Tutor.find({timetableId: req.params.timetableId})
-    .populate('timetableId')
+  var query = Tutor.find();
+
+  if (req.params.timetableId) {
+    query.where('timetableId').equals(req.params.timetableId);
+  }
+
+  query.populate('timetableId')
     .sort({points: -1})
     .exec(function (err, tutors) {
       if (err) {
@@ -25,8 +30,16 @@ exports.globalHighscore = function (req, res) {
 };
 //
 exports.localHighscore = function (req, res) {
-  TutorsFight.find({timetableId: req.params.timetableId, sessionId: req.params.sessionId})
-    .populate('alpha')
+  var query = TutorsFight.find();
+
+  if (req.params.timetableId) {
+    query.where('timetableId').equals(req.params.timetableId);
+  }
+  if (req.params.sessionId) {
+    query.where('sessionId').equals(req.params.sessionId);
+  }
+
+  query.populate('alpha')
     .populate('beta')
     .populate('timetableId')
     .sort({timestamp: 1})
@@ -99,16 +112,16 @@ exports.randomHighscore = function (req, res) {
       for (var j = 0; j < 100; j++) {
         tutorsFights.sort(function (a, b) {
           var c = Math.round(Math.random()) - 0.5;
-          if(c > 0 ){
+          if (c > 0) {
             si++;
-          }else{
+          } else {
             no++;
           }
           return c;
           //return (Math.round(Math.random()) - 0.5);
         });
 
-        tutorsFights.sort(function(a, b){
+        tutorsFights.sort(function (a, b) {
           a.sessionId - b.sessionId;
         });
 
@@ -146,6 +159,22 @@ exports.randomHighscore = function (req, res) {
     });
 };
 
+exports.exportAll = function (req, res) {
+  TutorsFight.find()
+    .populate('alpha')
+    .populate('beta')
+    .populate('tutorPairId')
+    .populate('timetableId')
+    .exec(function (err, tutorsFights) {
+      if (err) {
+        return handleError(res, err);
+      }
+      if (!tutorsFights) {
+        return res.send(404);
+      }
+      return res.json(tutorsFights);
+    });
+};
 
 function handleError(res, err) {
   return res.send(500, err);

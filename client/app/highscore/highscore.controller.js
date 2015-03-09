@@ -7,21 +7,20 @@ angular.module('devMashApp')
 
     $scope.localHighscore = [];
 
+    if (typeof $routeParams.timetableId !== 'undefined') {
 
-    $http.get('api/tutors/highscore/' + $routeParams.timetableId)
-      .success(function (global) {
-        console.log('global', global);
-        $scope.globalHighscore = global;
-      });
-
-
-    //$http.get('api/tutors/random/' + $routeParams.timetableId)
-    //  .success(function (random) {
-    //    console.log('random', random);
-    //    $scope.fights = random.fights;
-    //    $scope.randomHighscore = random.tutors;
-    //  });
-
+      $http.get('api/tutors/highscore/' + $routeParams.timetableId)
+        .success(function (global) {
+          console.log('global', global);
+          $scope.globalHighscore = global;
+        });
+    } else {
+      $http.get('api/tutors/highscore')
+        .success(function (global) {
+          console.log('global', global);
+          $scope.globalHighscore = global;
+        });
+    }
     if (typeof $routeParams.sessionId !== 'undefined') {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId + '/' + $routeParams.sessionId)
@@ -31,8 +30,6 @@ angular.module('devMashApp')
         });
 
     }
-
-
   }]);
 
 

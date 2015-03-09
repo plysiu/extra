@@ -10,5 +10,9 @@ angular.module('devMashApp')
       .when('/highscore/:timetableId', {
         templateUrl: 'app/highscore/highscore.html',
         controller: 'HighscoreCtrl'
+      })
+      .when('/highscore', {
+        templateUrl: 'app/highscore/highscore.html',
+        controller: 'HighscoreCtrl'
       });
   });
