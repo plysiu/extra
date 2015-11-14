@@ -6,7 +6,9 @@ var TutorsFight = require('./tutorsFight.model');
 var TutorPair = require('../tutorPair/tutorPair.model');
 var Tutor = require('../tutor/tutor.model');
 var ELO = require('arpad');
-var elo = new ELO();
+var elo = new ELO({
+  default: 16
+});
 
 // Creates a new tutorsFight in the DB.
 exports.create = function (req, res) {

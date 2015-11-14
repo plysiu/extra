@@ -4,11 +4,14 @@ var _ = require('lodash');
 var Tutor = require('./tutor.model');
 var TutorsFight = require('../tutorsFight/tutorsFight.model');
 var ELO = require('arpad');
-var elo = new ELO();
 
 
 exports.globalHighscore = function (req, res) {
-  var query = TutorsFight.find();
+
+  var elo = new ELO({default: 16});
+
+
+  var query = TutorsFight.find().limit(923);
 
 
   query.populate('alpha')
@@ -27,8 +30,11 @@ exports.globalHighscore = function (req, res) {
       for (var i = 0; i < tutorsFights.length; i++) {
         tutors[tutorsFights[i].alpha.id] = tutorsFights[i].alpha;
         tutors[tutorsFights[i].alpha.id].points = 1400;
+        tutors[tutorsFights[i].alpha.id].id = tutorsFights[i].alpha.id;
         tutors[tutorsFights[i].beta.id] = tutorsFights[i].beta;
         tutors[tutorsFights[i].beta.id].points = 1400;
+        tutors[tutorsFights[i].beta.id].id = tutorsFights[i].beta.id;
+
       }
       for (var i = 0; i < tutorsFights.length; i++) {
         var alphaPoints = tutors[tutorsFights[i].alpha.id].points;
@@ -77,6 +83,10 @@ exports.highscore = function (req, res) {
 };
 //
 exports.localHighscore = function (req, res) {
+
+  var elo = new ELO({default: 16});
+
+
   var query = TutorsFight.find();
   query.where('timetableId').equals(req.params.timetableId);
   query.where('sessionId').equals(req.params.sessionId);
@@ -131,8 +141,18 @@ exports.localHighscore = function (req, res) {
 
 //
 exports.randomHighscore = function (req, res) {
-  TutorsFight.find({timetableId: req.params.timetableId})
-    .populate('alpha')
+
+  var elo = new ELO({default: 16});
+
+
+  //TutorsFight.find({timetableId: req.params.timetableId})
+  var query = TutorsFight.find();
+  if (req.params.timetableId) {
+
+    query.where('timetableId').equals(req.params.timetableId);
+  }
+
+  query.populate('alpha')
     .populate('beta')
     .populate('timetableId')
     .exec(function (err, tutorsFights) {
@@ -199,14 +219,16 @@ exports.randomHighscore = function (req, res) {
         })
       });
     });
-};
+}
+;
 
 exports.exportAll = function (req, res) {
+  var c = 'c';
+
   TutorsFight.find()
     .populate('alpha')
     .populate('beta')
-    .populate('tutorPairId')
-    .populate('timetableId')
+
     .exec(function (err, tutorsFights) {
       if (err) {
         return handleError(res, err);
@@ -214,7 +236,21 @@ exports.exportAll = function (req, res) {
       if (!tutorsFights) {
         return res.send(404);
       }
-      return res.json(tutorsFights);
+
+      var data = [];
+      for (var i = 0; i < tutorsFights.length; i++) {
+        if (typeof data[tutorsFights[i].alpha.id] == 'undefined') {
+          data[tutorsFights[i].alpha.id] = {id:tutorsFights[i].alpha.id,c:0};
+        }
+        if (typeof data[tutorsFights[i].beta.id] == 'undefined') {
+          data[tutorsFights[i].beta.id] = {id:tutorsFights[i].beta.id, c:0};
+        }
+        data[tutorsFights[i].alpha.id].c++;
+        data[tutorsFights[i].beta.id].c++;
+
+      }
+
+      return res.json(data);
     });
 };
 
