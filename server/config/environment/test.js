@@ -5,6 +5,6 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/devmash-test'
+    uri: 'mongodb://localhost/extra2'
   }
 };

@@ -10,8 +10,18 @@
         odpowiedzi wszystkich osób, które oceniały tych samych nauczycieli.
       </p>
 
+      <p class="text-justify">
+        Twój ranking może nie być całkowicie zgodny z Twoimi oczekiwaniami, na przykład jeśli wybierałeś sprzeczne
+        odpowiedzi, zbyt cześto wybierałeś "nie wiem", lub przerwałeś quiz przedwcześniej. Jeśli masz ochotę, możesz
+        zawsze powtórzyć quiz.
+      </p>
+
+      <div class="col-lg-6 col-lg-offset-3 form-group ">
+        <a class="btn btn-group-justified btn-lg btn-success" ng-href="/">Strona Główna ></a>
+      </div>
+      
       <div class="row">
-        <div ng-if="localHighscore.length > 0" class="col-lg-6">
+        <div ng-if="localHighscore.length > 0" class="col-lg-4 col-md-4">
           <h3>
             Twój ranking:
           </h3>
@@ -25,9 +35,9 @@
           </ol>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4  col-md-4">
           <h3>
-            Zbiorczy ranking:
+            Zbiorczy ranking grupy dziekańskiej:
           </h3>
           <ol>
             <li ng-repeat="item in globalHighscore">
@@ -37,17 +47,21 @@
           </ol>
         </div>
 
+        <div class="col-lg-4 col-md-4">
+          <h3>
+            Zbiorczy ranking:
+          </h3>
+          <ol>
+            <li ng-repeat="item in highscore">
+              {{item.name}}
+              <span class="text-right">({{item.points}})</span>
+            </li>
+          </ol>
+        </div>
+
 
       </div>
-      <p class="text-justify">
-        Twój ranking może nie być całkowicie zgodny z Twoimi oczekiwaniami, na przykład jeśli wybierałeś sprzeczne
-        odpowiedzi, zbyt cześto wybierałeś "nie wiem", lub przerwałeś quiz przedwcześniej. Jeśli masz ochotę, możesz
-        zawsze powtórzyć quiz.
-      </p>
 
-      <div class="col-lg-6 col-lg-offset-3 form-group ">
-        <a class="btn btn-group-justified btn-lg btn-success" ng-href="/">Strona Główna ></a>
-      </div>
 
       <!--<div class="hidden-xs">-->
         <!--<iframe src="http://live.mstream.pl/lp/zubry-346/" scrolling="no" allowfullscreen="allowfullscreen"-->

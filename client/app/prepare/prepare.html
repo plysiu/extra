@@ -7,9 +7,27 @@
           Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską, nie przejmuj się wielkością znaków wystarczy że
           będzie poprawna nazwa.
         </p>
-        <input ng-if="groups" autofocus="" ng-model="query.name" ng-keyup="validateGroupName()"
-               class="form-control input-lg text-center"
-               type="text" placeholder="Twoja grupa dziekańska">
+        <input ng-model="query.name" ng-keyup="validateGroupName()"
+        class="form-control input-lg text-center"
+        type="text" placeholder="Twoja grupa dziekańska">
+
+        <!--<div ng-if="groups" >-->
+
+          <!--<pre>Model: {{asyncSelected | json}}</pre>-->
+          <!--<input autofocus="" type="text"-->
+                 <!--ng-keyup="validateGroupName()"-->
+                 <!--ng-model="query.name"-->
+                 <!--placeholder="Twoja grupa dziekańska"-->
+                 <!--uib-typeahead="groupName as group.name for group in groups | filter:{name:$viewValue > 3} |filter:{name.length > 3}"-->
+                 <!--class="form-control">-->
+          <!--<i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>-->
+          <!--<div ng-show="noResults">-->
+            <!--<i class="glyphicon glyphicon-remove"></i> No Results Found-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div>-->
+
+
       </div>
       <div ng-if="timetable && !disabled" class="form-group has-success text-center">
 

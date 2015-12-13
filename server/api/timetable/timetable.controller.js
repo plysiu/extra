@@ -26,7 +26,8 @@ exports.create = function (req, res) {
        * Downloads timetable for given group_id
        */
       request({
-        uri: 'http://devplan.uek.krakow.pl/api/timetables/g' + req.body.id,
+        rejectUnauthorized: false,
+        uri: 'https://devplan.uek.krakow.pl/api/timetables/g' + req.body.id,
         method: 'GET'
       }, function (err, response, body) {
         if (err) {
@@ -43,31 +44,10 @@ exports.create = function (req, res) {
             /**
              */
             var tutors = {};
-            var validTutors = ['Jacek Wołoszyn',
-              'Ryszard Tadeusiewicz',
-              'Jan Madej',
-              'Janusz Morajda',
-              'Grażyna Paliwoda-Pękosz',
-              'Piotr Soja',
-              'Janusz Stal',
-              'Jan Trąbka',
-              'Wit Urban',
-              'Artur Żuwała',
-              'Paweł Lula',
-              'Dariusz Dymek',
-              'Mariusz Grabowski',
-              'Dariusz Put',
-              'Tadeusz Wilusz',
-              'Paweł Wołoszyn',
-              'Agnieszka Zając',
-              'Przemysław Jaśko',
-              'Janusz Tuchowski',
-              'Katarzyna Wójcik'
-            ];
+
 
 
             for (var i = 0; i < body.activities.length; i++) {
-
 
               for (var j = 0; j < body.activities[i].tutors.length; j++) {
 
@@ -86,11 +66,8 @@ exports.create = function (req, res) {
 
             var tuts = [];
             for (var t in tutors) {
-              for (var r in validTutors) {
-                if (tutors[t].name.indexOf(validTutors[r]) !== -1) {
+
                   tuts.push(tutors[t]);
-                }
-              }
             }
             /**
              * Uzupełnianie bazy prowadzącymi
@@ -99,7 +76,7 @@ exports.create = function (req, res) {
               if (err) {
                 console.log('tutors:', err);
               }
-              //     console.log(tutors);
+                   console.log(tutors);
               //**
               /**
                * Uzupełnianie bazy parami prowadzących
@@ -130,5 +107,6 @@ exports.create = function (req, res) {
 };
 
 function handleError(res, err) {
+  console.log(err);
   return res.send(500, err);
 }

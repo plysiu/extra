@@ -33,7 +33,7 @@ angular.module('devMashApp')
       value: null
     };
 
-    $http.get('http://devplan.uek.krakow.pl/api/groups')
+    $http.get('https://devplan.uek.krakow.pl/api/groups')
       .success(function (data) {
         $scope.groups = data;
         console.log('Grupy zostały pobrane.', data);
@@ -57,8 +57,7 @@ angular.module('devMashApp')
       $scope.timetable = null;
       $scope.disabled = true;
       for (var i = 0; i < $scope.groups.length; i++) {
-        if ($scope.groups[i].name.toLowerCase() == $scope.query.name.toLowerCase() &&
-          $scope.groups[i].name.toLowerCase().indexOf('krdzis') !== -1) {
+        if ($scope.groups[i].name.toLowerCase() == $scope.query.name.toLowerCase()) {
           $scope.getTimetableId($scope.groups[i].id);
           $scope.disabled = false;
         }

@@ -14,13 +14,14 @@ angular.module('devMashApp')
           console.log('global', global);
           $scope.globalHighscore = global;
         });
-    } else {
+    }
+    //} else {
       $http.get('api/tutors/highscore')
         .success(function (global) {
           console.log('global', global);
-          $scope.globalHighscore = global;
+          $scope.highscore = global;
         });
-    }
+ //   }
     if (typeof $routeParams.sessionId !== 'undefined') {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId + '/' + $routeParams.sessionId)

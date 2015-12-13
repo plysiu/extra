@@ -6,7 +6,6 @@ angular.module('devMashApp')
      *
      * @type {Array}
      */
-    console.log('bower install angular-unsavedChanges --save.');
     $scope.tutorsPairs = [];
     $scope.votedTutorsPairs = [];
     /**

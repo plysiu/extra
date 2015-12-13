@@ -6,7 +6,8 @@ angular.module('devMashApp', [
   'ngSanitize',
   'ngRoute',
   'ngAnimate',
-  'ngFx'
+  'ngFx',
+  'ui.bootstrap'
 ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
