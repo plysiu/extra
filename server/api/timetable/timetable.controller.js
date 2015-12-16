@@ -51,10 +51,10 @@ exports.create = function (req, res) {
 
               for (var j = 0; j < body.activities[i].tutors.length; j++) {
 
-                if (body.activities[i].tutors[j].name.indexOf('dr ') !== -1
-                  || body.activities[i].tutors[j].name.indexOf('mgr ') !== -1
-                  || body.activities[i].tutors[j].name.indexOf('inż. ') !== -1
-                  || body.activities[i].tutors[j].name.indexOf('prof. ') !== -1)
+                if (body.activities[i].tutors[j].name.indexOf('dr ') !== -1 ||
+                  body.activities[i].tutors[j].name.indexOf('mgr ') !== -1 ||
+                  body.activities[i].tutors[j].name.indexOf('inż. ') !== -1 ||
+                  body.activities[i].tutors[j].name.indexOf('prof. ') !== -1)
                   tutors[body.activities[i].tutors[j].name] = {
                     id: body.activities[i].tutors[j].id,
                     name: body.activities[i].tutors[j].name,
