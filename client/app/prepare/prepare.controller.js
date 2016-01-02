@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('devMashApp')
-  .controller('PrepareCtrl', function ($scope, $http, $location, $interval, $log) {
+  .controller('PrepareCtrl', function ($scope, $http, $location, $interval, $log, $q) {
     /**
      *
      * @type {{name: string}}
      */
-    $scope.query = {
-      name: ''
+    $scope.searchText = '';
+    $scope.selectedItem = {
+      id:null,
+      display:''
     };
     /**
      *
@@ -35,40 +37,41 @@ angular.module('devMashApp')
 
     $http.get('https://devplan.uek.krakow.pl/api/groups')
       .success(function (data) {
-        $scope.groups = data;
-        console.log('Grupy zostały pobrane.', data);
+        console.log('Grupy zostały pobrane.', data.length);
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].category === 1) {
+            $scope.groups[$scope.groups.length + 1] = {
+              display: data[i].name,
+              id: data[i].id
+            };
+          }
+        }
       }).error(function () {
-        alert('Wystąpił błąd podczas pobierania danych, sprawdz połączenie internetowe i odśwież strone.');
-      });
+      alert('Wystąpił błąd podczas pobierania danych, sprawdz połączenie internetowe i odśwież strone.');
+    });
     /**
      *
      * @param id
      */
-    $scope.getTimetableId = function (id) {
-      $http.post('/api/timetables', {id: id})
-        .success(function (data) {
-          $scope.timetable = data;
-        }).error(function () {
+    $scope.getTimetableId = function (data) {
+      if (typeof data === 'object') {
+
+        $http.post('/api/timetables', {id: data.id})
+          .success(function (data) {
+            console.log(data);
+            $scope.timetable = data;
+          }).error(function () {
           alert('Wystąpił błąd podczas zapytania, sprawdź połączenie internetowe i odśwież strone.');
         });
-    };
-
-    $scope.validateGroupName = function () {
-      $scope.timetable = null;
-      $scope.disabled = true;
-      for (var i = 0; i < $scope.groups.length; i++) {
-        if ($scope.groups[i].name.toLowerCase() == $scope.query.name.toLowerCase()) {
-          $scope.getTimetableId($scope.groups[i].id);
-          $scope.disabled = false;
-        }
       }
     };
 
-    $scope.compareTutors = function () {
-      $location.path('compare/tutors/' + $scope.timetable._id + '/' + $scope.grade.value);
+    $scope.validateGroupName = function (id) {
+      $scope.timetable = null;
+      $scope.disabled = true;
+      $scope.getTimetableId(id);
+      $scope.disabled = false;
     };
 
-    $scope.showHighscore = function () {
-      $location.path('highscore/' + $scope.timetable._id);
-    };
+
   });
