@@ -38,77 +38,73 @@
 <![endif]-->
 <!-- Add your site or application content here -->
 
-<md-toolbar  layout-align="center" >
-  <div  flex="50">
-  <div class="md-toolbar-tools">
-    <h1>Projekt ExTRA</h1>
-    <!--<h2>Experimental Tutor Rating Application</h2>-->
-  </div>
+<md-toolbar layout-align="center">
+  <div flex="50">
+    <div class="md-toolbar-tools">
+      <h1>Projekt ExTRA</h1>
+      <!--<h2>Experimental Tutor Rating Application</h2>-->
+    </div>
   </div>
 </md-toolbar>
 
-<div layout="column" flex id="content">
+<div layout="column" flex>
   <div layout="row" flex layout-align="center">
-
-  <md-content layout="column"   flex="50" ng-view>
-    <a href="http://dev.uek.krakow.pl">dev</a>
-  </md-content>
-
+    <md-content layout="column" flex="100" flex-gt-sm="60" flex-md="75" ng-view>
+      <a href="http://dev.uek.krakow.pl">dev</a>
+    </md-content>
   </div>
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
+    ga('create', 'UA-46869390-5', 'auto');
+    ga('send', 'pageview');
 
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  </script>
+  <!--[if lt IE 9]>
+  <script src="bower_components/es5-shim/es5-shim.js"></script>
+  <script src="bower_components/json3/lib/json3.min.js"></script>
+  <![endif]-->
+  <!-- build:js({client,node_modules}) app/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+  <script src="bower_components/ngFx/dist/ngFx.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
 
-  ga('create', 'UA-46869390-5', 'auto');
-  ga('send', 'pageview');
-
-</script>
-<!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.min.js"></script>
-<![endif]-->
-<!-- build:js({client,node_modules}) app/vendor.js -->
-<!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/lodash/dist/lodash.compat.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
-<script src="bower_components/ngFx/dist/ngFx.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/angular-aria/angular-aria.js"></script>
-<script src="bower_components/angular-messages/angular-messages.js"></script>
-<script src="bower_components/angular-material/angular-material.js"></script>
-<!-- endbower -->
-<!-- endbuild -->
-
-<!-- build:js({.tmp,client}) app/app.js -->
-<script src="app/app.js"></script>
-<!-- injector:js -->
-<script src="app/compare/tutors/compare/tutors.controller.js"></script>
-<script src="app/compare/tutors/compare/tutors.js"></script>
-<script src="app/highscore/highscore.controller.js"></script>
-<script src="app/highscore/highscore.js"></script>
-<script src="app/homepage/homepage.controller.js"></script>
-<script src="app/homepage/homepage.js"></script>
-<script src="app/prepare/prepare.controller.js"></script>
-<script src="app/prepare/prepare.js"></script>
-<!-- endinjector -->
-<!-- endbuild -->
+  <!-- build:js({.tmp,client}) app/app.js -->
+  <script src="app/app.js"></script>
+  <!-- injector:js -->
+  <script src="app/compare/tutors/compare/tutors.controller.js"></script>
+  <script src="app/compare/tutors/compare/tutors.js"></script>
+  <script src="app/highscore/highscore.controller.js"></script>
+  <script src="app/highscore/highscore.js"></script>
+  <script src="app/homepage/homepage.controller.js"></script>
+  <script src="app/homepage/homepage.js"></script>
+  <script src="app/prepare/prepare.controller.js"></script>
+  <script src="app/prepare/prepare.js"></script>
+  <!-- endinjector -->
+  <!-- endbuild -->
 </body>
 </html>

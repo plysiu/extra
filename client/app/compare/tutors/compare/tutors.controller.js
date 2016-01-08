@@ -57,33 +57,16 @@ angular.module('devMashApp')
       $scope.progress++;
 
     };
-    /**
-     *
-     * @returns {string}
-     */
-    $scope.getStyle = function () {
-      switch ($scope.progress % 5) {
-        case 0:
-          return 'btn-success';
-        case 1:
-          return 'btn-primary';
-        case 2:
-          return 'btn-danger';
-        case 3:
-          return 'btn-warning';
-        case 4:
-          return 'btn-info';
-      }
-    };
 
     $scope.lastVote = 0;
 
     $scope.checkDelayBetweenVotes = function () {
-      return $scope.lastVote + 300 <= new Date().getTime();
+      return $scope.lastVote + 250 <= new Date().getTime();
     }
 
     $scope.castTheVote = function (result) {
-      if ($scope.elapsedSinceLastVote() > 800 &&
+      if (
+        $scope.elapsedSinceLastVote() > 250 &&
         ( result !== 0 || result !== 1 || result !== 2 )) {
 
         $scope.locked = true;
@@ -102,20 +85,20 @@ angular.module('devMashApp')
           .success(function (data) {
             console.log('Głos wysłany. Zostało par: ' + $scope.tutorsPairs.length);
             $scope.votedTutorsPairs.unshift({
-              style: $scope.getStyle(),
               result: result,
               fight: $scope.fight
             });
 
             $timeout(function () {
               $scope.setNextPair();
-            }, 500 - $scope.elapsedSinceLastVote());
+            }, 250 - $scope.elapsedSinceLastVote());
 
           }).error(function () {
             alert('Wystąpił błąd podczas wysyłania głosu. Odśwież strone i spróbuj ponownie.');
           });
       }
     };
+
 
     $scope.elapsedSinceLastVote = function () {
       return new Date().getTime() - $scope.lastVote;
@@ -130,6 +113,6 @@ angular.module('devMashApp')
     };
 
     $scope.getPercentages = function () {
-      return Math.floor(($scope.progress / $scope.max ) * 100) + '%';
+      return Math.floor(($scope.progress / $scope.max ) * 100);
     };
   }]);

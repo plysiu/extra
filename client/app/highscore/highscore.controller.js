@@ -10,27 +10,46 @@ angular.module('devMashApp')
     if (typeof $routeParams.timetableId !== 'undefined') {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId)
-        .success(function (global) {
-          console.log('global', global);
-          $scope.globalHighscore = global;
+        .success(function (local) {
+
+          console.log('local', local);
+          var max = local[0].points;
+          var min = local[local.length - 1].points;
+          for (var i = 0; i < local.length; i++) {
+            local[i].percent =parseInt( 100 * (local[i].points - min) / (max - min));
+          }
+          $scope.globalHighscore = local;
         });
     }
-    //} else {
+
+    else {
       $http.get('api/tutors/highscore')
-        .success(function (global) {
-          console.log('global', global);
-          $scope.highscore = global;
+        .success(function (local) {
+
+          console.log('local', local);
+          var max = local[0].points;
+          var min = local[local.length - 1].points;
+          for (var i = 0; i < local.length; i++) {
+            local[i].percent =parseInt( 100 * (local[i].points - min) / (max - min));          }
+          $scope.highscore = local;
         });
- //   }
+    }
     if (typeof $routeParams.sessionId !== 'undefined') {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId + '/' + $routeParams.sessionId)
         .success(function (local) {
+
           console.log('local', local);
+          var max = local[0].points;
+          var min = local[local.length - 1].points;
+          for (var i = 0; i < local.length; i++) {
+            local[i].percent =parseInt( 100 * (local[i].points - min) / (max - min));          }
+
           $scope.localHighscore = local;
         });
 
     }
-  }]);
+  }])
+;
 
 

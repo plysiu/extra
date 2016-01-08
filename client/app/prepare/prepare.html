@@ -1,7 +1,7 @@
 <md-card>
   <md-card-title>
     <md-card-title-text>
-      <span class="md-headline">  Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską</span>
+      <span class="md-headline">Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską</span>
       <span class="md-subhead">nie przejmuj się wielkością znaków wystarczy że
       będzie poprawna nazwa.</span>
     </md-card-title-text>
@@ -9,11 +9,8 @@
   <md-card-content>
     <md-autocomplete
       md-min-length="4"
-      md-select-on-match="true"
-      md-autofocus="true"
       md-floating-label="Twoja grupa dziekańska"
       md-selected-item-change="validateGroupName(selectedItem)"
-      md-delay="50"
       md-selected-item="selectedItem"
       md-search-text="searchText"
       md-items="item in groups | filter:searchText"
@@ -23,56 +20,26 @@
       </md-item-template>
     </md-autocomplete>
 
-    <div ng-if="timetable && !disabled">
 
-      <p>
-        Z jakiego przedziału miałeś/aś średnią ocen z poprzedniego semestru?
-      </p>
-
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="0">nie wiem
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="1">( 2; 3 ]
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="2">( 3; 3.5 ]
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="3">( 3.5; 4 ]
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="4">( 4; 4.5 ]
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="5">( 4.5; 5 ]
-      </label>
-      <label class="radio-inline">
-        <input type="radio" name="grade" ng-model='grade.value' value="6">( 5; 6 ]
-      </label>
+    <div layout="row" layout-xs="column" layout-align="center center" ng-show="timetable && !disabled">
+      <md-button fill="50" fill-xs="100" ng-href="compare/tutors/{{timetable._id}}">Oceniaj</md-button>
+      <md-button fill="50" fill-xs="100" ng-href="highscore/{{timetable._id}}">Pokaż mi tylko zbiorczy ranking
+      </md-button>
     </div>
-    </md-card-content>
-    <md-card-actions layout="row" layout-align="center center" ng-show="timetable && !disabled && grade.value">
-      <md-button layout-fill ng-href="compare/tutors/{{timetable._id}}/{{grade.value}}">Oceniaj</md-button>
-      <md-button layout-fill ng-href="highscore/{{timetable._id}}">Pokaż mi tylko zbiorczy ranking</md-button>
-    </md-card-actions>
-<md-card-content>
     <p>
       Aby móc wybrać pary nauczycieli, z którymi faktycznie miałeś zajęcia, system musi znać Twoją grupę dziekańską. W
-      gruncie rzeczy to jedyna informacja o Tobie, jakiej potrzebujemy - i nawet jej nie zapisujemy. Oceny są
-      całkowicie anonimowe, nie uzywamy ciasteczek ani innych metod śledzenia, nie pytamy też o żadne dane osobowe.
+      gruncie rzeczy to jedyna informacja o Tobie, jakiej potrzebujemy — i nawet jej nie zapisujemy. Oceny są
+      całkowicie anonimowe, nie używamy ciasteczek ani innych metod śledzenia, nie pytamy też o żadne dane osobowe.
     </p>
     <p>
       Nie namyślaj się zbyt długo nad odpowiedziami. Jeśli nie umiesz się zdecydować lub z jakichś powodów nie znasz
       kogoś z wyświetlonej pary, wybierz opcję "nie wiem". Jeśli się pomylisz, nie przejmuj się: nie zrujnuje to
       sumarycznego wyniku, a Ty możesz zawsze powtórzyć ten quiz.
     </p>
-
     <p>
-      Gdy zakończysz ocenianie, zobaczysz efekt - ranking wykładowców stworzony na podstawie Twoich odpowiedzi, a
+      Gdy zakończysz ocenianie, zobaczysz efekt — ranking wykładowców stworzony na podstawie Twoich odpowiedzi, a
       także aktualny ranking na podstawie wszystkich do tej pory zebranych ocen.
     </p>
 
   </md-card-content>
-
 </md-card>

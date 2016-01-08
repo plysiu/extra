@@ -8,8 +8,8 @@ angular.module('devMashApp')
      */
     $scope.searchText = '';
     $scope.selectedItem = {
-      id:null,
-      display:''
+      id: null,
+      display: ''
     };
     /**
      *
@@ -27,13 +27,7 @@ angular.module('devMashApp')
      * @type {boolean}
      */
     $scope.disabled = true;
-    /**
-     *
-     * @type {{value: null}}
-     */
-    $scope.grade = {
-      value: null
-    };
+
 
     $http.get('https://devplan.uek.krakow.pl/api/groups')
       .success(function (data) {
