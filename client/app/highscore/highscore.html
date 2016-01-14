@@ -15,16 +15,37 @@
     </p>
     <p>
       Twój ranking może nie być całkowicie zgodny z Twoimi oczekiwaniami, na przykład, jeśli wybierałeś sprzeczne
-      odpowiedzi, zbyt często wybierałeś "remis", pomijałeś pary lub przerwałeś quiz przedwcześnie. Jeśli masz ochotę, możesz
+      odpowiedzi, zbyt często wybierałeś "remis", pomijałeś pary lub przerwałeś quiz przedwcześnie. Jeśli masz ochotę,
+      możesz
       zawsze powtórzyć quiz.
     </p>
-    <div>
-      <md-button class="md-raised" ng-href="/">Strona Główna</md-button>
+
+    <div class="md-block" ng-if=" !show">
+      <em>
+        Z Twoich odpowiedzi wynika, że najwyżej cenionym przez Ciebie wykładowcą jest
+        <strong>{{localHighscore[0].name}}</strong>.
+        Możesz napisać teraz, dlaczego właśnie ten wykładowca podoba Ci się najbardziej?</em>
+      <md-input-container class="md-block">
+        <textarea ng-model="data"></textarea>
+      </md-input-container>
     </div>
   </md-card-content>
+  <div layout="row" layout-xs="column">
+
+    <md-card-actions ng-if="!show">
+      <md-button class="md-raised" ng-click="sendData()">Wyślij opinię i pokaż ranking</md-button>
+    </md-card-actions>
+    <span flex></span>
+    <md-card-actions>
+      <md-button class="md-raised" ng-if="!show" ng-click="clickShow()">Pomiń opinię</md-button>
+      <md-button class="md-raised" ng-click="homepage()">Strona Główna</md-button>
+    </md-card-actions>
+  </div>
+
 </md-card>
-<div layout="row" layout-xs="column">
-  <md-card flex="50" flex-xs="100" mg-if="localHighscore.length > 0">
+
+<div layout="row" layout-xs="column" ng-if="show">
+  <md-card flex="50" flex-xs="100" ng-if="localHighscore.length > 0">
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Twój ranking</span>
@@ -33,9 +54,13 @@
     </md-card-title>
     <md-card-content layout="column">
       <md-list>
-        <md-list-item ng-repeat="item in localHighscore">
+        <md-list-item ng-repeat="item in localHighscore" layout="column">
           {{item.name}}
-          <span class="text-right"> - {{item.percent}}%</span>
+
+
+          <md-progress-linear md-mode="determinate" value="{{item.percent}}">
+          </md-progress-linear>
+          <!--<span class="text-right"> - {{item.percent}}%</span>-->
         </md-list-item>
       </md-list>
     </md-card-content>
@@ -50,9 +75,11 @@
     </md-card-title>
     <md-card-content>
       <md-list>
-        <md-list-item ng-repeat="item in globalHighscore">
+        <md-list-item ng-repeat="item in globalHighscore" layout="column">
           {{item.name}}
-          <span> - {{item.percent}}%</span>
+          <md-progress-linear md-mode="determinate" value="{{item.percent}}">
+          </md-progress-linear>
+          <!--<span> - {{item.percent}}%</span>-->
         </md-list-item>
       </md-list>
     </md-card-content>
