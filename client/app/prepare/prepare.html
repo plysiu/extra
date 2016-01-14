@@ -2,12 +2,12 @@
   <md-card-title>
     <md-card-title-text>
       <span class="md-headline">Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską</span>
-      <span class="md-subhead">nie przejmuj się wielkością znaków wystarczy że
+      <span class="md-subhead">Nie przejmuj się wielkością znaków, wystarczy że
       będzie poprawna nazwa.</span>
     </md-card-title-text>
   </md-card-title>
   <md-card-content>
-    <md-autocomplete
+    <md-autocomplete ng-show="groups.length > 0 "
       md-min-length="4"
       md-floating-label="Twoja grupa dziekańska"
       md-selected-item-change="validateGroupName(selectedItem)"
@@ -19,11 +19,14 @@
         <span md-highlight-text="searchText">{{item.display}}</span>
       </md-item-template>
     </md-autocomplete>
-
-
+    <div layout="row" layout-sm="column" layout-align="space-around" ng-show="groups.length < 1 ">
+      <md-progress-circular md-mode="indeterminate" ></md-progress-circular>
+    </div>
     <div layout="row" layout-xs="column" layout-align="center center" ng-show="timetable && !disabled">
-      <md-button fill="50" fill-xs="100" ng-href="compare/tutors/{{timetable._id}}">Oceniaj</md-button>
-      <md-button fill="50" fill-xs="100" ng-href="highscore/{{timetable._id}}">Pokaż mi tylko zbiorczy ranking
+      <md-button fill="50" fill-xs="100" class="md-raised" ng-href="compare/tutors/{{timetable._id}}">Oceniaj
+      </md-button>
+      <md-button fill="50" fill-xs="100" class="md-raised" ng-href="highscore/{{timetable._id}}">Pokaż mi tylko zbiorczy
+        ranking
       </md-button>
     </div>
     <p>
