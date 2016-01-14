@@ -7,10 +7,7 @@ angular.module('devMashApp')
      * @type {{name: string}}
      */
     $scope.searchText = '';
-    $scope.selectedItem = {
-      id: null,
-      display: ''
-    };
+    $scope.selectedItem = '';
     /**
      *
      * @type {Array}
@@ -47,10 +44,11 @@ angular.module('devMashApp')
      *
      * @param id
      */
-    $scope.getTimetableId = function (data) {
-      if (typeof data === 'object') {
+    $scope.getTimetableId = function (id) {
+      console.log('x;,', id, typeof id);
 
-        $http.post('/api/timetables', {id: data.id})
+      if (typeof id === 'number') {
+        $http.post('/api/timetables', {id: id})
           .success(function (data) {
             console.log(data);
             $scope.timetable = data;
@@ -60,12 +58,18 @@ angular.module('devMashApp')
       }
     };
 
-    $scope.validateGroupName = function (id) {
-      $scope.timetable = null;
-      $scope.disabled = true;
-      $scope.getTimetableId(id);
-      $scope.disabled = false;
-    };
+
+    $scope.validateGroupName = function (selectedItem) {
+      console.log(selectedItem);
+      if (typeof selectedItem === 'object' && $scope.searchText.length > 0) {
+
+        $scope.timetable = null;
+        $scope.disabled = true;
+        $scope.getTimetableId(selectedItem.id);
+        $scope.disabled = false;
+      }
+
+    }
 
 
   });
