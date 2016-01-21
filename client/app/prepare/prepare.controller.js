@@ -62,6 +62,7 @@ angular.module('devMashApp')
     $scope.validateGroupName = function (selectedItem) {
       console.log(selectedItem);
       if (typeof selectedItem === 'object' && $scope.searchText.length > 0) {
+        $scope.searchText = selectedItem.display;
         $scope.timetable = null;
         $scope.disabled = true;
         $scope.getTimetableId(selectedItem.id);

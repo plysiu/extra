@@ -27,7 +27,7 @@ exports.create = function (req, res) {
        */
       request({
         rejectUnauthorized: false,
-        uri: 'https://devplan.uek.krakow.pl/api/timetables/g' + req.body.id,
+        uri: 'http://devplan.uek.krakow.pl/api/timetables/g' + req.body.id,
         method: 'GET'
       }, function (err, response, body) {
         if (err) {
