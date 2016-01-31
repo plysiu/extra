@@ -6,7 +6,6 @@ angular.module('devMashApp', [
     'ngSanitize',
     'ngRoute',
     'ngAnimate',
-    'ngFx',
     'ngAria',
     'ngMaterial'
   ])

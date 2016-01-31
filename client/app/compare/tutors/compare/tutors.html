@@ -7,36 +7,44 @@
   </md-card-title>
   <md-card-content>
     <p>
-      Wszystkie pary są różne, wrażenie powtarzania się ich jest złudzeniem. 
+      Wszystkie pary są różne, wrażenie powtarzania się ich jest złudzeniem.
       Kolejność osób jest przypadkowa.
     </p>
 
-    <md-card-actions layout="row" layout-xs="column">
-
-      <md-button flex="50" flex-xs="100" md-no-ink class="md-primary" 
-      ng-click="setNextPair()">
-        <span>Pomiń tą parę</span>
-      </md-button>
-      <md-button flex="50" flex-xs="100" md-no-ink class="md-primary" 
-      ng-click="goToHighscore()"> Zakończ i przejdź do
-        wyników
-      </md-button>
-    </md-card-actions>
-
-    <md-progress-linear md-mode="determinate" value="{{getPercentages()}}">
-    </md-progress-linear>
 
 
-    <md-card-actions layout="row" layout-xs="column" layout-align="center">
-      <md-button ng-disabled="{{!locked}}" flex="33" flex-xs="100" 
+
+  </md-card-content>
+
+  <md-progress-linear md-mode="determinate" value="{{getPercentages()}}">
+  </md-progress-linear>
+
+
+  <md-card-actions layout="row" layout-xs="column">
+
+    <md-button flex="50" flex-xs="100" md-no-ink class="md-primary"
+               ng-click="setNextPair()">
+      <span>Pomiń tą parę</span>
+    </md-button>
+    <md-button flex="50" flex-xs="100" md-no-ink class="md-primary"
+               ng-click="goToHighscore()"> Zakończ i przejdź do
+      wyników
+    </md-button>
+  </md-card-actions>
+
+  <md-card-actions layout="row" layout-xs="column" layout-align="center">
+
+      <md-button ng-disabled="{{!locked}}" flex="100"
       class="md-raised md-warn" ng-click="castTheVote(0)">
         <span ng-bind="fight.alpha.name"></span>
       </md-button>
-      <md-button ng-disabled="{{!locked}}" flex="34" flex-xs="100" 
+
+      <md-button ng-disabled="{{!locked}}" flex="100"
       class="md-raised md-warn" ng-click="castTheVote(1)">
         remis
       </md-button>
-      <md-button ng-disabled="{{!locked}}" flex="33" flex-xs="100" 
+
+      <md-button ng-disabled="{{!locked}}" flex="100"
       class="md-raised md-warn" ng-click="castTheVote(2)">
         <span ng-bind="fight.beta.name"></span>
       </md-button>
@@ -44,21 +52,20 @@
     </md-card-actions>
     <md-divider hide-xs></md-divider>
     <md-list hide-xs>
-      <md-list-item layout="row" layout-align="center" 
+      <md-list-item layout="row" layout-align="center"
       ng-repeat="item in votedTutorsPairs">
-        <md-button ng-disabled="true" flex="33"
+        <md-button ng-disabled="true"  flex="100"
                    class="{{ result(0, item.result) ? 'md-raised' : ''}}">
           <span ng-bind="item.fight.alpha.name"></span>
         </md-button>
-        <md-button flex="34" ng-disabled="true"
+        <md-button  ng-disabled="true"  flex="100"
                    class="{{ result(1, item.result) ? 'md-raised' : ''}}">
           remis
         </md-button>
-        <md-button flex="33" ng-disabled="true"
+        <md-button  ng-disabled="true" flex="100"
                    class="{{ result(2, item.result) ? 'md-raised' : ''}}">
           <span ng-bind="item.fight.beta.name"></span>
         </md-button>
       </md-list-item>
     </md-list>
-  </md-card-content>
   </md-list-item>
