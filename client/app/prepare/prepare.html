@@ -7,24 +7,21 @@
     </md-card-title-text>
   </md-card-title>
   <md-card-content>
-      <md-autocomplete ng-show="groups.length > 0 "
-        required
-                       md-autofocus
-                       md-floating-label="Twoja grupa dziekańska"
-
-                       md-selected-item-change="validateGroupName(selectedItem)"
-
-                       md-selected-item="selectedItem"
-                       md-search-text="searchText"
-                       md-items="item in groups | filter:searchText"
-                       md-item-text="item.display">
-        <md-item-template>
-          <span md-highlight-text="searchText">{{item.display}}</span>
-        </md-item-template>
-        <div ng-messages="autocompleteForm.autocomplete.$error">
-          <div ng-message="required">This field is required</div>
-        </div>
-      </md-autocomplete>
+    <md-autocomplete ng-show="groups.length > 0 "
+                     name="z"
+                     required
+                     md-autofocus
+                     md-min-length="3"
+                     md-floating-label="Twoja grupa dziekańska"
+                     md-selected-item-change="validateGroupName(selectedItem)"
+                     md-selected-item="selectedItem"
+                     md-search-text="searchText"
+                     md-items="item in groups | filter:searchText"
+                     md-item-text="item.display">
+      <md-item-template>
+        <span md-highlight-text="searchText">{{item.display}}</span>
+      </md-item-template>
+    </md-autocomplete>
 
 
     <div layout="row" layout-sm="column" layout-align="space-around" ng-show="groups.length === 0 ">

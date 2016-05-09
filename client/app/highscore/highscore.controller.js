@@ -95,7 +95,7 @@ console.log(data);
             local[i].percent = parseInt(100 * (local[i].points - min) / (max - min));
           }
 
-          $scope.localHighscore = local;
+          $scope.localHighscore = local
         });
 
     }

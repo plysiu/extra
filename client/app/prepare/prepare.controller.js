@@ -26,7 +26,7 @@ angular.module('devMashApp')
     $scope.disabled = true;
 
 
-    $http.get('http://api.uekplan.pl/groups')
+    $http.get('https://api.uekplan.pl/groups')
       .success(function (data) {
         console.log('Grupy zostały pobrane.', data.length);
 
@@ -51,7 +51,7 @@ angular.module('devMashApp')
         $http.post('/api/timetables', {id: id})
           .success(function (data) {
             console.log(data);
-            $scope.timetable = data;
+            $scope.timetable = data
           }).error(function () {
           alert('Wystąpił błąd podczas zapytania, sprawdź połączenie internetowe i odśwież strone.');
         });
