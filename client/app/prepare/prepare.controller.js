@@ -7,7 +7,7 @@ angular.module('devMashApp')
      * @type {{name: string}}
      */
     $scope.searchText = '';
-    $scope.selectedItem = '';
+    $scope.selectedItem = null;
     /**
      *
      * @type {Array}
@@ -26,17 +26,17 @@ angular.module('devMashApp')
     $scope.disabled = true;
 
 
-    $http.get('https://devplan.uek.krakow.pl/api/groups')
+    $http.get('http://api.uekplan.pl/groups')
       .success(function (data) {
         console.log('Grupy zostały pobrane.', data.length);
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].category === 1) {
-            $scope.groups[$scope.groups.length + 1] = {
-              display: data[i].name,
-              id: data[i].id
-            };
-          }
-        }
+
+        data.forEach(function(element) {
+          $scope.groups.push({
+          display: element.key,
+          id: element.id
+        });
+      })
+
       }).error(function () {
       alert('Wystąpił błąd podczas pobierania danych, sprawdz połączenie internetowe i odśwież strone.');
     });
@@ -60,7 +60,6 @@ angular.module('devMashApp')
 
 
     $scope.validateGroupName = function (selectedItem) {
-      console.log(selectedItem);
       if (typeof selectedItem === 'object' && $scope.searchText.length > 0) {
         $scope.searchText = selectedItem.display;
         $scope.timetable = null;

@@ -15,95 +15,83 @@ exports.create = function (req, res) {
    * Checks if timetable with given group_id exists
    */
   Timetable.findOne({group_id: req.body.id}, function (err, timetable) {
+    if (err) {
+      return handleError(res, err);
+    }
+    if (timetable) {
+      return res.json(201, timetable);
+
+    }
+    /**
+     * Downloads timetable for given group_id
+     */
+    request({
+      rejectUnauthorized: false,
+      uri: 'http://api.uekplan.pl/timetables/' + req.body.id + '/tutors',
+      method: 'GET'
+    }, function (err, response, body) {
       if (err) {
         return handleError(res, err);
       }
-      if (timetable) {
-        return res.json(201, timetable);
-
-      }
+      body = JSON.parse(body);
       /**
-       * Downloads timetable for given group_id
+       * Saves timetable with given group_id
        */
-      request({
-        rejectUnauthorized: false,
-        uri: 'http://devplan.uek.krakow.pl/api/timetables/g' + req.body.id,
-        method: 'GET'
-      }, function (err, response, body) {
-        if (err) {
-          return handleError(res, err);
-        }
-        body = JSON.parse(body);
-        /**
-         * Saves timetable with given group_id
-         */
-        Timetable.create(body.params, function (err, timetable) {
-            if (err) {
-              return handleError(res, err);
-            }
-            /**
-             */
-            var tutors = {};
-
-
-
-            for (var i = 0; i < body.activities.length; i++) {
-
-              for (var j = 0; j < body.activities[i].tutors.length; j++) {
-
-                if (body.activities[i].tutors[j].name.indexOf('dr ') !== -1 ||
-                  body.activities[i].tutors[j].name.indexOf('mgr ') !== -1 ||
-                  body.activities[i].tutors[j].name.indexOf('inż. ') !== -1 ||
-                  body.activities[i].tutors[j].name.indexOf('prof. ') !== -1)
-                  tutors[body.activities[i].tutors[j].name] = {
-                    id: body.activities[i].tutors[j].id,
-                    name: body.activities[i].tutors[j].name,
-                    timetableId: timetable._id
-                  };
-
-              }
-            }
-
-            var tuts = [];
-            for (var t in tutors) {
-
-                  tuts.push(tutors[t]);
-            }
-            /**
-             * Uzupełnianie bazy prowadzącymi
-             */
-            Tutor.collection.insert(tuts, function (err, tutors) {
-              if (err) {
-                console.log('tutors:', err);
-              }
-                   console.log(tutors);
-              //**
-              /**
-               * Uzupełnianie bazy parami prowadzących
-               * @type {Array}
-               */
-              var tutorPairs = [];
-              for (var i = 0; i < tutors.length; i++) {
-                for (var j = i + 1; j < tutors.length; j++) {
-                  tutorPairs.push({
-                    timetableId: timetable._id,
-                    alpha: tutors[i]._id,
-                    beta: tutors[j]._id
-                  });
-                }
-              }
-              TutorPair.collection.insert(tutorPairs, function (err, tutorPairs) {
-                if (err) {
-                  console.log('TutorPairs', err);
-                }
-              });
-            });
-            return res.json(201, timetable);
+      Timetable.create({
+          group_id: req.body.id
+        },
+        function (err, timetable) {
+          if (err) {
+            return handleError(res, err);
           }
-        );
-      });
-    }
-  );
+          /**
+           */
+          var tuts = [];
+
+
+          body.forEach(function (tutor) {
+
+            tuts.push({
+              id: tutor.id,
+              name: tutor.key,
+              timetableId: timetable._id
+            });
+          });
+
+
+          /**
+           * Uzupełnianie bazy prowadzącymi
+           */
+          Tutor.collection.insert(tuts, function (err, tutors) {
+            if (err) {
+              console.log('tutors:', err);
+            }
+            console.log(tutors);
+            //**
+            /**
+             * Uzupełnianie bazy parami prowadzących
+             * @type {Array}
+             */
+            var tutorPairs = [];
+            for (var i = 0; i < tutors.length; i++) {
+              for (var j = i + 1; j < tutors.length; j++) {
+                tutorPairs.push({
+                  timetableId: timetable._id,
+                  alpha: tutors[i]._id,
+                  beta: tutors[j]._id
+                });
+              }
+            }
+            TutorPair.collection.insert(tutorPairs, function (err, tutorPairs) {
+              if (err) {
+                console.log('TutorPairs', err);
+              }
+            });
+          });
+          return res.json(201, timetable);
+        });
+    });
+  });
 };
 
 function handleError(res, err) {
