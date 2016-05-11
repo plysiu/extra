@@ -1,53 +1,71 @@
-<md-card>
-  <md-card-title>
-    <md-card-title-text>
-      <span class="md-headline">Aby zacząć oceniać wykładowców wpisz Twoją grupe dziekańską</span>
-      <span class="md-subhead">Nie przejmuj się wielkością znaków, wystarczy że
-      będzie poprawna nazwa.</span>
-    </md-card-title-text>
-  </md-card-title>
-  <md-card-content>
-    <md-autocomplete ng-show="groups.length > 0 "
-                     name="z"
-                     required
-                     md-autofocus
-                     md-min-length="3"
-                     md-floating-label="Twoja grupa dziekańska"
-                     md-selected-item-change="validateGroupName(selectedItem)"
-                     md-selected-item="selectedItem"
-                     md-search-text="searchText"
-                     md-items="item in groups | filter:searchText"
-                     md-item-text="item.display">
-      <md-item-template>
-        <span md-highlight-text="searchText">{{item.display}}</span>
-      </md-item-template>
-    </md-autocomplete>
+<md-section>
+
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span
+          class="md-headline">Aby zacząć oceniać wykładowców wpisz nazwę grupy dziekańskiej do której należysz</span>
+        <span class="md-subhead">Nie przejmuj się wielkością znaków &ndash; wystarczy, że będzie poprawna nazwa, np. "KrDUIs1012, "krdzis3011io"</span>
+      </md-card-title-text>
+    </md-card-title>
 
 
-    <div layout="row" layout-sm="column" layout-align="space-around" ng-show="groups.length === 0 ">
-      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-    </div>
-    <div layout="row" layout-xs="column" layout-align="center center" ng-show="timetable && !disabled">
-      <md-button fill="50" fill-xs="100" class="md-raised" ng-href="compare/tutors/{{timetable._id}}">Oceniaj
+    <md-card-actions layout="row" layout-xs="column" layout-align-xs="center stretch" layout-align="center center"
+                     ng-show="timetable">
+      <md-button flex="50" flex-xs="100" class="md-raised md-warn" ng-href="compare/tutors/{{timetable._id}}"><span>
+        Oceniaj
+      </span>
       </md-button>
-      <md-button fill="50" fill-xs="100" class="md-raised" ng-href="highscore/{{timetable._id}}">Pokaż mi tylko zbiorczy
-        ranking
+<br/>
+      <md-button flex="50" flex-xs="100" class="md-raised" ng-href="highscore/{{timetable._id}}"><span>Pokaż mi tylko zbiorczy
+        ranking</span>
       </md-button>
-    </div>
-    <p>
-      Aby móc wybrać pary nauczycieli, z którymi faktycznie miałeś zajęcia, system musi znać Twoją grupę dziekańską. W
-      gruncie rzeczy to jedyna informacja o Tobie, jakiej potrzebujemy — i nawet jej nie zapisujemy. Oceny są
-      całkowicie anonimowe, nie używamy ciasteczek ani innych metod śledzenia, nie pytamy też o żadne dane osobowe.
-    </p>
-    <p>
-      Nie namyślaj się zbyt długo nad odpowiedziami. Jeśli nie umiesz się zdecydować lub z jakichś powodów nie znasz
-      kogoś z wyświetlonej pary, wybierz opcję "nie wiem". Jeśli się pomylisz, nie przejmuj się: nie zrujnuje to
-      sumarycznego wyniku, a Ty możesz zawsze powtórzyć ten quiz.
-    </p>
-    <p>
-      Gdy zakończysz ocenianie, zobaczysz efekt — ranking wykładowców stworzony na podstawie Twoich odpowiedzi, a
-      także aktualny ranking na podstawie wszystkich do tej pory zebranych ocen.
-    </p>
 
-  </md-card-content>
-</md-card>
+    </md-card-actions>
+    <md-card-content>
+
+
+      <md-autocomplete ng-if="groups.length > 0"
+                       md-input-id="kurwa"
+                       md-select-on-match="true"
+                       md-min-length="3"
+                       md-autoselect="true"
+                       md-floating-label="Wpisz nazwę swojej grupy dziekańskiej"
+                       md-selected-item-change="validateGroupName(selectedItem)"
+                       md-selected-item="selectedItem"
+                       md-search-text="searchText"
+                       md-items="item in groups | filter:searchText"
+                       md-item-text="item.display">
+        <md-item-template>
+          <span md-highlight-text="searchText">{{item.display}}</span>
+        </md-item-template>
+      </md-autocomplete>
+
+
+      <div layout="row" layout-sm="column" layout-align="space-around" ng-show="groups.length === 0 ">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+      </div>
+
+      <p>
+        Aby móc wybrać pary nauczycieli, z którymi faktycznie miałeś zajęcia, system musi znać Twoją grupę dziekańską. W
+        gruncie rzeczy to jedyna informacja o Tobie, jakiej potrzebujemy — i nawet jej nie zapisujemy. Oceny są
+        całkowicie anonimowe, nie używamy ciasteczek ani innych metod śledzenia, nie pytamy też o żadne dane osobowe.
+      </p>
+      <p>
+        Nie namyślaj się zbyt długo nad odpowiedziami. Jeśli nie umiesz się zdecydować lub z jakichś powodów nie znasz
+        kogoś z wyświetlonej pary, wybierz opcję "nie wiem". Jeśli się pomylisz, nie przejmuj się: nie zrujnuje to
+        sumarycznego wyniku, a Ty możesz zawsze powtórzyć ten quiz.
+      </p>
+      <p>
+        Gdy zakończysz ocenianie, zobaczysz efekt — ranking wykładowców stworzony na podstawie Twoich odpowiedzi, a
+        także aktualny ranking na podstawie wszystkich do tej pory zebranych ocen.
+      </p>
+
+    </md-card-content>
+
+
+
+
+  </md-card>
+
+</md-section>

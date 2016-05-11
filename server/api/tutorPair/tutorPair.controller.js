@@ -18,20 +18,44 @@ exports.show = function (req, res) {
       }
 
       tutorPair.sort(function (a, b) {
-        return Math.round(Math.random()) - 0.5;
-      });
-      tutorPair.sort(function (a, b) {
-        return a.counter - b.counter;
+        return a.counter - b.counter
       });
 
+ console.log(tutorPair);
+      var list = [];
+      do {
+        if (list.length === 0) {
+          list.push(tutorPair.shift());
+        } else {
+
+          for (var i = 0; i < tutorPair.length - 1; i++) {
+            if (list[list.length - 1].alpha !== tutorPair[i].alpha
+              && list[list.length - 1].beta !== tutorPair[i].alpha
+              && list[list.length - 1].alpha !== tutorPair[i].beta
+              && list[list.length - 1].beta !== tutorPair[i].beta
+            ) {
+              list.push(tutorPair[i]);
+              tutorPair.splice(i, 1);
+              break;
+            }
+          }
+
+          if (tutorPair.length !== 0) {
+            list.push(tutorPair.shift());
+          }
+        }
+
+      } while (tutorPair.length !== 0);
 
 
-
+      // console.log(list);
       return res.json({
         sessionId: new Date().getTime(),
-        tutorsPairs: tutorPair
+        tutorsPairs: list
       });
     });
+
+
 };
 
 function handleError(res, err) {

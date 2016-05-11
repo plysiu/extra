@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('devMashApp', [
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
-    'ngRoute',
-    'ngAnimate',
-    'ngAria',
-    'ngMaterial'
-  ])
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngRoute',
+  'ngAnimate',
+  'ngAria',
+  'ngMaterial'
+])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
       .otherwise({

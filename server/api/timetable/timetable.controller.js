@@ -53,7 +53,7 @@ exports.create = function (req, res) {
 
             tuts.push({
               id: tutor.id,
-              name: tutor.key,
+              name: (tutor.value) ? tutor.forename + ' ' + tutor.surname : tutor.key,
               timetableId: timetable._id
             });
           });
@@ -74,12 +74,14 @@ exports.create = function (req, res) {
              */
             var tutorPairs = [];
             for (var i = 0; i < tutors.length; i++) {
-              for (var j = i + 1; j < tutors.length; j++) {
-                tutorPairs.push({
-                  timetableId: timetable._id,
-                  alpha: tutors[i]._id,
-                  beta: tutors[j]._id
-                });
+              for (var j = 0; j < tutors.length; j++) {
+                if (tutors[i]._id !== tutors[j]._id) {
+                  tutorPairs.push({
+                    timetableId: timetable._id,
+                    alpha: tutors[i]._id,
+                    beta: tutors[j]._id
+                  });
+                }
               }
             }
             TutorPair.collection.insert(tutorPairs, function (err, tutorPairs) {

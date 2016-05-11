@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('devMashApp')
-  .controller('PrepareCtrl', function ($scope, $http, $location, $interval, $log, $q) {
+  .controller('PrepareCtrl', function ($scope, $http, $location, $interval, $log, $q, $timeout) {
     /**
      *
      * @type {{name: string}}
@@ -30,14 +30,20 @@ angular.module('devMashApp')
       .success(function (data) {
         console.log('Grupy zostały pobrane.', data.length);
 
-        data.forEach(function(element) {
+        data.forEach(function (element) {
           $scope.groups.push({
-          display: element.key,
-          id: element.id
+            display: element.key,
+            id: element.id
+          });
         });
-      })
 
-      }).error(function () {
+
+        $timeout(function () {
+          $('#kurwa').focus();
+        }, 100);
+
+      })
+      .error(function () {
       alert('Wystąpił błąd podczas pobierania danych, sprawdz połączenie internetowe i odśwież strone.');
     });
     /**
@@ -50,8 +56,9 @@ angular.module('devMashApp')
       if (typeof id === 'number') {
         $http.post('/api/timetables', {id: id})
           .success(function (data) {
-            console.log(data);
+
             $scope.timetable = data
+
           }).error(function () {
           alert('Wystąpił błąd podczas zapytania, sprawdź połączenie internetowe i odśwież strone.');
         });
@@ -60,12 +67,13 @@ angular.module('devMashApp')
 
 
     $scope.validateGroupName = function (selectedItem) {
-      if (typeof selectedItem === 'object' && $scope.searchText.length > 0) {
-        $scope.searchText = selectedItem.display;
-        $scope.timetable = null;
-        $scope.disabled = true;
+
+      console.log(selectedItem);
+      if ( selectedItem !== null ) {
         $scope.getTimetableId(selectedItem.id);
-        $scope.disabled = false;
+      }else{
+        $scope.timetable = null;
+
       }
 
     }
