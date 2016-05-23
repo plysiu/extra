@@ -61,15 +61,16 @@ exports.create = function (req, res) {
              */
             var tuts = [];
 
-            console.log(body);
+            console.log(body.tutors);
 
             body.tutors.forEach(function (tutor) {
-
-              tuts.push({
-                id: tutor.id,
-                name: (tutor.value) ? tutor.labeltutor.forename + ' ' + tutor.labeltutor.surename : tutor.key,
-                timetableId: timetable._id
-              });
+              if (tutor) {
+                tuts.push({
+                  id: tutor.id,
+                  name: (tutor.value) ? tutor.labeltutor.forename + ' ' + tutor.labeltutor.surename : tutor.key,
+                  timetableId: timetable._id
+                });
+              }
             });
 
 

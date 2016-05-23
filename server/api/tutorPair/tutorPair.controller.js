@@ -45,15 +45,14 @@ exports.show = function (req, res) {
         }
 
       } while (tutorPair.length !== 0);
-      
-      list.forEach(function (pair) {
 
+      list.forEach(function (pair) {
         if (Math.random() > 0.5) {
           var swap = pair.alpha;
           pair.alpha = pair.beta;
           pair.beta = swap;
         }
-      })      ;
+      });
 
       // console.log(list);
       return res.json({
