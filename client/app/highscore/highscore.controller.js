@@ -19,30 +19,31 @@ angular.module('devMashApp')
     };
 
 
-    $scope.data = '';
+    $scope.data = {text: ''};
 
 
     $scope.sendData = function () {
 
-      if (typeof $routeParams.sessionId !== 'undefined') {
-        $http.post('/api/sessions', {session: $routeParams.sessionId, text: $scope.data})
+      console.log($scope.data.text);
+      if (typeof $routeParams.sessionId !== undefined) {
+        $http.post('/api/sessions', {session: $routeParams.sessionId, text: $scope.data.text})
           .success(function (data) {
-console.log(data);
+            console.log('X', data);
             $scope.show = true;
-          }).error(function (err) {
-          $scope.show = true;
-        });
+          })
+          .error(function (err) {
+            $scope.show = true;
+          });
       }
     }
 
-    if (typeof $routeParams.sessionId !== 'undefined') {
+    if (typeof $routeParams.sessionId !== undefined) {
 
       $http.get('api/sessions/' + $routeParams.sessionId)
         .success(function (data) {
           console.log(data);
           if (data) {
             $scope.show = true;
-
           }
 
         }).error(function () {
@@ -55,7 +56,7 @@ console.log(data);
       $scope.session = false;
     }
 
-    if (typeof $routeParams.timetableId !== 'undefined') {
+    if (typeof $routeParams.timetableId !== undefined) {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId)
         .success(function (local) {

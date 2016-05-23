@@ -28,9 +28,9 @@ angular.module('devMashApp')
 
     $http.get('https://api.uekplan.pl/groups')
       .success(function (data) {
-        console.log('Grupy zostały pobrane.', data.length);
+        console.log('Grupy zostały pobrane.', data.groups.length);
 
-        data.forEach(function (element) {
+        data.groups.forEach(function (element) {
           $scope.groups.push({
             display: element.key,
             id: element.id

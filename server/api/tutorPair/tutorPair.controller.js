@@ -21,7 +21,7 @@ exports.show = function (req, res) {
         return a.counter - b.counter
       });
 
- console.log(tutorPair);
+      console.log(tutorPair);
       var list = [];
       do {
         if (list.length === 0) {
@@ -36,7 +36,6 @@ exports.show = function (req, res) {
             ) {
               list.push(tutorPair[i]);
               tutorPair.splice(i, 1);
-              break;
             }
           }
 
@@ -46,7 +45,15 @@ exports.show = function (req, res) {
         }
 
       } while (tutorPair.length !== 0);
+      
+      list.forEach(function (pair) {
 
+        if (Math.random() > 0.5) {
+          var swap = pair.alpha;
+          pair.alpha = pair.beta;
+          pair.beta = swap;
+        }
+      })      ;
 
       // console.log(list);
       return res.json({
