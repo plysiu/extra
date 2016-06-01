@@ -27,7 +27,7 @@ exports.create = function (req, res) {
      */
     request({
       rejectUnauthorized: false,
-      uri: 'https://api.uekplan.pl/events/' + req.body.id + '/tutors?excludeLabels=4623,4624,4635,4646,4650,4655,4726,4841,5167,5369,5615,5632,5877',
+      uri: 'https://api.uekplan.pl/events/' + req.body.id + '/tutors?excludeLabels=4623,4624,4635,4638,4646,4649,4650,4655,4726,4841,5369,5615,5632,5877',
       method: 'GET'
     }, function (err, response, body) {
       if (err) {
