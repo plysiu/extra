@@ -7,7 +7,7 @@ angular.module('devMashApp')
     $scope.localHighscore = [];
 
     $scope.show = false;
-    $scope.session = true;
+    $scope.session = false;
 
 
     $scope.clickShow = function () {
@@ -23,45 +23,46 @@ angular.module('devMashApp')
 
 
     $scope.sendData = function () {
-
       console.log($scope.data.text);
       if (typeof $routeParams.sessionId !== undefined) {
         $http.post('/api/sessions', {session: $routeParams.sessionId, text: $scope.data.text})
           .success(function (data) {
             console.log('X', data);
-            $scope.show = true;
           })
           .error(function (err) {
-            $scope.show = true;
+            console.log('X', data);
           });
       }
+      $scope.clickShow();
     }
 
-    if (typeof $routeParams.sessionId !== undefined) {
-
+    if ($routeParams.sessionId !== undefined) {
       $http.get('api/sessions/' + $routeParams.sessionId)
         .success(function (data) {
-          console.log(data);
-          if (data) {
-            $scope.show = true;
+          console.log('U', data);
+          if (!data) {
+            $scope.session = true;
+          } else {
+            $scope.session = false;
+            $scope.clickShow();
           }
 
-        }).error(function () {
-        $scope.show = true;
-        $scope.session = false;
-      });
-    }
-    else {
-      $scope.show = true;
+        })
+        .error(function (err) {
+          console.log('erru', err)
+          $scope.session = false;
+        });
+    } else {
+      $scope.clickShow();
       $scope.session = false;
     }
 
-    if (typeof $routeParams.timetableId !== undefined) {
+    if ($routeParams.timetableId !== undefined) {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId)
         .success(function (local) {
 
-          console.log('local', local);
+          console.log('global', local);
           var max = local[0].points;
           var min = local[local.length - 1].points;
           for (var i = 0; i < local.length; i++) {
@@ -74,17 +75,19 @@ angular.module('devMashApp')
     else {
       $http.get('api/tutors/highscore')
         .success(function (local) {
-
-          console.log('local', local);
+          console.log('all global', local);
           var max = local[0].points;
           var min = local[local.length - 1].points;
           for (var i = 0; i < local.length; i++) {
             local[i].percent = parseInt(100 * (local[i].points - min) / (max - min));
           }
-          $scope.highscore = local;
+          $scope.globalHighscore = local;
+          $scope.clickShow();
         });
     }
-    if (typeof $routeParams.sessionId !== 'undefined') {
+
+
+    if ($routeParams.sessionId !== undefined) {
 
       $http.get('api/tutors/highscore/' + $routeParams.timetableId + '/' + $routeParams.sessionId)
         .success(function (local) {

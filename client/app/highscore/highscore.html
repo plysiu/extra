@@ -22,7 +22,7 @@
       zawsze powtórzyć quiz.
     </p>
 
-    <div class="md-block" ng-if="!show">
+    <div class="md-block" ng-if="!show && session">
       <em>
         Z Twoich odpowiedzi wynika, że najwyżej cenionym przez Ciebie wykładowcą jest
         <strong>{{localHighscore[0].name}}</strong>.
@@ -34,12 +34,12 @@
   </md-card-content>
   <div layout="row" layout-xs="column">
 
-    <md-card-actions ng-if="!show">
+    <md-card-actions ng-if="!show && session">
       <md-button class="md-raised" ng-click="sendData()">Wyślij opinię i pokaż ranking</md-button>
     </md-card-actions>
     <span flex></span>
     <md-card-actions>
-      <md-button class="md-raised" ng-if="!show" ng-click="clickShow()">Pomiń opinię</md-button>
+      <md-button class="md-raised" ng-if="!show && session" ng-click="clickShow()">Pomiń opinię</md-button>
       <md-button class="md-raised" ng-click="homepage()">Strona Główna</md-button>
     </md-card-actions>
   </div>
