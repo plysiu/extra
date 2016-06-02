@@ -65,14 +65,31 @@ exports.create = function (req, res) {
 
             body.tutors.forEach(function (tutor) {
               if (tutor) {
-                tuts.push({
-                  id: tutor.id,
-                  name: (tutor.value) ? tutor.labeltutor.forename + ' ' + tutor.labeltutor.surename : tutor.key,
-                  timetableId: timetable._id
-                });
+
+                if (tutor.labeltutor && tutor.labeltutor.forename !== null && tutor.labeltutor.surename !== null) {
+                  tuts.push({
+                    id: tutor.id,
+                    name: tutor.labeltutor.forename + ' ' + tutor.labeltutor.surename,
+                    timetableId: timetable._id
+                  });
+                } else {
+                  if (tutor.value) {
+                    tuts.push({
+                      id: tutor.id,
+                      name: tutor.value,
+                      timetableId: timetable._id
+                    });
+                  } else {
+                    tuts.push({
+                      id: tutor.id,
+                      name: tutor.key,
+                      timetableId: timetable._id
+                    });
+                  }
+
+                }
               }
             });
-
 
             /**
              * Uzupełnianie bazy prowadzącymi
