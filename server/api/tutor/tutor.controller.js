@@ -288,7 +288,7 @@ exports.tajnafunkcjalogana = function (req, res) {
           return handleError(res, err);
         }
 
-        return res.json(csv);
+        return res.send(csv);
       });
 
 
