@@ -11,4 +11,6 @@ router.get('/highscore', controller.globalHighscore);
 router.get('/highscore/:timetableId', controller.highscore);
 router.get('/highscore/:timetableId/:sessionId', controller.localHighscore);
 router.get('/exportAll', controller.exportAll);
+router.get('/tajnyurllogana', controller.tajnafunkcjalogana);
+
 module.exports = router;

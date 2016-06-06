@@ -240,10 +240,10 @@ exports.exportAll = function (req, res) {
       var data = [];
       for (var i = 0; i < tutorsFights.length; i++) {
         if (typeof data[tutorsFights[i].alpha.id] == 'undefined') {
-          data[tutorsFights[i].alpha.id] = {id:tutorsFights[i].alpha.id,c:0};
+          data[tutorsFights[i].alpha.id] = {id: tutorsFights[i].alpha.id, c: 0};
         }
         if (typeof data[tutorsFights[i].beta.id] == 'undefined') {
-          data[tutorsFights[i].beta.id] = {id:tutorsFights[i].beta.id, c:0};
+          data[tutorsFights[i].beta.id] = {id: tutorsFights[i].beta.id, c: 0};
         }
         data[tutorsFights[i].alpha.id].c++;
         data[tutorsFights[i].beta.id].c++;
@@ -253,6 +253,48 @@ exports.exportAll = function (req, res) {
       return res.json(data);
     });
 };
+
+
+exports.tajnafunkcjalogana = function (req, res) {
+  var json2csv = require('json2csv');
+
+
+  TutorsFight.find({result: {'$ne': 1}})
+    .populate('alpha')
+    .populate('beta')
+    .populate('timetableId')
+    .exec(function (err, tutorsFights) {
+      if (err) {
+        return handleError(res, err);
+      }
+
+      if (!tutorsFights) {
+        return res.send(404);
+      }
+
+
+      var x = tutorsFights.map(function (element) {
+        return {
+          winner: element.alpha.name,
+          loser: element.beta.name,
+          timetable: element.timetableId.name,
+          session: element.sessionId
+        };
+
+      });
+
+      json2csv({data: x, fields: ['winner', 'loser', 'timetable', 'session']}, function (err, csv) {
+        if (err) {
+          return handleError(res, err);
+        }
+
+        return res.json(csv);
+      });
+
+
+    });
+};
+
 
 function handleError(res, err) {
   return res.send(500, err);
